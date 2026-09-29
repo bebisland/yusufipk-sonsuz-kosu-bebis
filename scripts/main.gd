@@ -8,7 +8,7 @@ const SPEED_INTERVAL := 10.0
 const SPAWN_AHEAD := 120.0
 const DESPAWN_BEHIND := 12.0
 const FIRST_ROW_Z := -45.0
-const CRYSTAL_POINTS := 50
+const CRYSTAL_POINTS := 25
 const LANE_WIDTH := 2.5
 
 const LAYER_OBSTACLE := 2
@@ -25,6 +25,10 @@ const MODELS := {
 }
 
 enum State { RUNNING, OVER }
+
+## Dev-only: steers and jumps on its own so a round can be checked from the editor
+## without keyboard input (set it with play_scene's on_ready writes).
+@export var autopilot := false
 
 var state := State.RUNNING
 var elapsed := 0.0
@@ -87,7 +91,11 @@ func _process(delta: float) -> void:
 		speed = move_toward(speed, target_speed, 3.0 * delta)
 		player.position.z -= speed * delta
 		distance += speed * delta
-		player.tick(delta, speed)
+		if autopilot:
+			var plan := _autopilot_plan()
+			player.tick(delta, speed, plan.lane, plan.jump)
+		else:
+			player.tick(delta, speed)
 		_spawn_ahead()
 		_despawn_behind()
 		_update_sunset(elapsed / ROUND_TIME)
@@ -107,6 +115,8 @@ func _score() -> int:
 
 func _end_round(title: String) -> void:
 	state = State.OVER
+	player.stop()
+	print("Round over: %s after %.1f s, score %d, crystals %d" % [title, elapsed, _score(), crystals])
 	hud.set_score(_score())
 	hud.show_end(title, _score(), crystals)
 
@@ -244,6 +254,7 @@ func _build_template(key: String) -> Area3D:
 	var info: Dictionary = MODELS[key]
 	var area := Area3D.new()
 	area.name = key.capitalize()
+	area.set_meta("kind", key)
 	area.monitoring = false
 	area.collision_mask = 0
 	var is_crystal := key == "crystal"
@@ -295,6 +306,41 @@ func _mesh_aabb(node: Node3D, space: Node3D) -> AABB:
 		result = box if first else result.merge(box)
 		first = false
 	return result
+
+
+## Picks a lane that is clear for the next few meters (preferring crystals) and
+## jumps when a barrier is right ahead in the current lane.
+func _autopilot_plan() -> Dictionary:
+	var blocked := {-1: false, 0: false, 1: false}
+	var gems := {-1: false, 0: false, 1: false}
+	var barrier_near := false
+	for child in spawned.get_children():
+		if not child.has_meta("kind"):
+			continue
+		var ahead: float = player.position.z - child.position.z
+		if ahead < -1.5 or ahead > 16.0:
+			continue
+		var kind: String = child.get_meta("kind")
+		var lane := clampi(roundi(child.position.x / LANE_WIDTH), -1, 1)
+		match kind:
+			"crystal":
+				gems[lane] = true
+			"barrier":
+				if lane == player.lane and ahead < speed * 0.28 + 1.0 and ahead > 0.0:
+					barrier_near = true
+			"pillar":
+				blocked[lane] = true
+			"cart":
+				for x in [child.position.x - LANE_WIDTH * 0.5, child.position.x + LANE_WIDTH * 0.5]:
+					blocked[clampi(roundi(x / LANE_WIDTH), -1, 1)] = true
+	var best: int = player.lane
+	var best_cost := INF
+	for lane in [-1, 0, 1]:
+		var cost := absf(lane - player.lane) + (100.0 if blocked[lane] else 0.0) - (1.5 if gems[lane] else 0.0)
+		if cost < best_cost:
+			best_cost = cost
+			best = lane
+	return {"lane": best, "jump": barrier_near}
 
 
 func _ensure_input_actions() -> void:
