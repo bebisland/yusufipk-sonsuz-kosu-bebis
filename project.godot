@@ -17,6 +17,7 @@ config/features=PackedStringArray("4.7", "Forward Plus")
 [autoload]
 
 BeckettRuntime="*uid://do68dqybesb7r"
+Sound="*res://scripts/sound.gd"
 
 [beckett]
 

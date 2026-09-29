@@ -2,6 +2,7 @@ extends Node3D
 ## Runner: switches between three lanes and jumps. Forward motion is driven by Main.
 
 signal hit_obstacle
+signal jumped
 signal picked_crystal(crystal: Node3D)
 
 const MODEL_PATH := "res://assets/models/explorer.glb"
@@ -64,6 +65,7 @@ func tick(delta: float, run_speed: float, auto_lane: Variant = null, auto_jump :
 		lane = mini(lane + 1, 1)
 	if (Input.is_action_just_pressed("jump") or auto_jump) and is_grounded():
 		vertical_velocity = JUMP_VELOCITY
+		jumped.emit()
 
 	vertical_velocity -= GRAVITY * delta
 	position.y += vertical_velocity * delta

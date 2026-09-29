@@ -66,6 +66,7 @@ func _ready() -> void:
 			push_warning("Missing model, %s will not spawn: %s" % [key, MODELS[key].path])
 	player.hit_obstacle.connect(_on_player_hit)
 	player.picked_crystal.connect(_on_crystal_picked)
+	player.jumped.connect(Sound.play.bind("jump"))
 	_update_sunset(0.0)
 	_update_camera(1.0)
 	hud.set_crystals(0)
@@ -127,6 +128,7 @@ func _on_player_hit() -> void:
 	if state != State.RUNNING:
 		return
 	player.die()
+	Sound.play("crash")
 	shake = 1.0
 	_end_round("Çarptın!")
 
@@ -135,6 +137,7 @@ func _on_crystal_picked(crystal: Node3D) -> void:
 	if state != State.RUNNING:
 		return
 	crystals += 1
+	Sound.play("crystal")
 	hud.set_crystals(crystals)
 	crystal.queue_free()
 
