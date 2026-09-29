@@ -12,7 +12,7 @@ var sfx_players := {}
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	music = AudioStreamPlayer.new()
-	music.volume_db = -8.0
+	music.volume_db = -12.0
 	add_child(music)
 	if ResourceLoader.exists(MUSIC_PATH):
 		var stream: AudioStream = load(MUSIC_PATH)
@@ -20,6 +20,8 @@ func _ready() -> void:
 			stream.loop = true
 		music.stream = stream
 		music.play()
+	else:
+		push_warning("Missing music, playing without it: %s" % MUSIC_PATH)
 
 	_add_sfx("jump", _make_jump(), -6.0)
 	_add_sfx("crystal", _make_crystal(), -8.0)
