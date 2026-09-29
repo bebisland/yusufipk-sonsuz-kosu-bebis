@@ -1,0 +1,229 @@
+[gd_scene load_steps=20 format=3]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
+[ext_resource type="Script" path="res://scripts/player.gd" id="2_player"]
+[ext_resource type="Script" path="res://scripts/hud.gd" id="3_hud"]
+[ext_resource type="Shader" path="res://shaders/sunset_sky.gdshader" id="4_sky"]
+[ext_resource type="Texture2D" path="res://assets/textures/sunset_sky.png" id="5_skytex"]
+[ext_resource type="Texture2D" path="res://assets/textures/stone_road.png" id="6_road"]
+[ext_resource type="Texture2D" path="res://assets/textures/crystal_icon.png" id="7_icon"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sky"]
+shader = ExtResource("4_sky")
+shader_parameter/sky_tex = ExtResource("5_skytex")
+shader_parameter/horizon_v = 0.85
+shader_parameter/brightness = 1.0
+
+[sub_resource type="Sky" id="Sky_main"]
+sky_material = SubResource("ShaderMaterial_sky")
+
+[sub_resource type="Environment" id="Environment_main"]
+background_mode = 2
+sky = SubResource("Sky_main")
+ambient_light_source = 3
+ambient_light_energy = 1.0
+tonemap_mode = 3
+glow_enabled = true
+glow_intensity = 0.7
+glow_bloom = 0.08
+fog_enabled = true
+fog_light_color = Color(0.95, 0.6, 0.4, 1)
+fog_density = 0.007
+fog_sky_affect = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_road"]
+albedo_texture = ExtResource("6_road")
+roughness = 0.95
+uv1_scale = Vector3(0.25, 0.25, 0.25)
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_road"]
+material = SubResource("StandardMaterial3D_road")
+size = Vector2(8.6, 320)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ground"]
+albedo_color = Color(0.6, 0.4, 0.3, 1)
+albedo_texture = ExtResource("6_road")
+roughness = 1.0
+uv1_scale = Vector3(0.07, 0.07, 0.07)
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ground"]
+material = SubResource("StandardMaterial3D_ground")
+size = Vector2(400, 400)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_player"]
+size = Vector3(0.7, 1.6, 0.6)
+
+[sub_resource type="LabelSettings" id="LabelSettings_big"]
+font_size = 72
+font_color = Color(1, 1, 1, 1)
+outline_size = 16
+outline_color = Color(0.08, 0.04, 0.1, 1)
+shadow_size = 6
+shadow_color = Color(0, 0, 0, 0.45)
+shadow_offset = Vector2(3, 4)
+
+[sub_resource type="LabelSettings" id="LabelSettings_small"]
+font_size = 30
+font_color = Color(1, 0.88, 0.6, 1)
+outline_size = 10
+outline_color = Color(0.08, 0.04, 0.1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_title"]
+font_size = 96
+font_color = Color(1, 0.8, 0.45, 1)
+outline_size = 20
+outline_color = Color(0.08, 0.04, 0.1, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_stats"]
+font_size = 48
+outline_size = 12
+outline_color = Color(0.08, 0.04, 0.1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.1, 0.05, 0.12, 0.72)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+content_margin_left = 64.0
+content_margin_top = 40.0
+content_margin_right = 64.0
+content_margin_bottom = 40.0
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_main")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_main")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+shadow_enabled = true
+directional_shadow_max_distance = 60.0
+
+[node name="Road" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_road")
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.03, 0)
+mesh = SubResource("PlaneMesh_ground")
+
+[node name="Player" type="Node3D" parent="."]
+script = ExtResource("2_player")
+
+[node name="Model" type="Node3D" parent="Player"]
+
+[node name="Hitbox" type="Area3D" parent="Player"]
+collision_mask = 6
+monitorable = false
+
+[node name="Shape" type="CollisionShape3D" parent="Player/Hitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+shape = SubResource("BoxShape3D_player")
+
+[node name="Camera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.4, 6.5)
+fov = 65.0
+
+[node name="Spawned" type="Node3D" parent="."]
+
+[node name="HUD" type="CanvasLayer" parent="."]
+script = ExtResource("3_hud")
+
+[node name="CrystalBox" type="HBoxContainer" parent="HUD"]
+offset_left = 32.0
+offset_top = 24.0
+offset_right = 432.0
+offset_bottom = 124.0
+theme_override_constants/separation = 16
+
+[node name="Icon" type="TextureRect" parent="HUD/CrystalBox"]
+custom_minimum_size = Vector2(56, 96)
+layout_mode = 2
+texture = ExtResource("7_icon")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CrystalLabel" type="Label" parent="HUD/CrystalBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
+label_settings = SubResource("LabelSettings_big")
+vertical_alignment = 1
+
+[node name="ScoreBox" type="VBoxContainer" parent="HUD"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -432.0
+offset_top = 16.0
+offset_right = -32.0
+offset_bottom = 140.0
+grow_horizontal = 0
+theme_override_constants/separation = -8
+
+[node name="Caption" type="Label" parent="HUD/ScoreBox"]
+layout_mode = 2
+text = "SKOR"
+label_settings = SubResource("LabelSettings_small")
+horizontal_alignment = 2
+
+[node name="ScoreLabel" type="Label" parent="HUD/ScoreBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
+label_settings = SubResource("LabelSettings_big")
+horizontal_alignment = 2
+
+[node name="TimeLabel" type="Label" parent="HUD"]
+unique_name_in_owner = true
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -120.0
+offset_top = 28.0
+offset_right = 120.0
+offset_bottom = 72.0
+grow_horizontal = 2
+text = "1:30"
+label_settings = SubResource("LabelSettings_small")
+horizontal_alignment = 1
+
+[node name="EndPanel" type="CenterContainer" parent="HUD"]
+unique_name_in_owner = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="PanelContainer" parent="HUD/EndPanel"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="VBox" type="VBoxContainer" parent="HUD/EndPanel/Panel"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="EndTitle" type="Label" parent="HUD/EndPanel/Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Gün battı!"
+label_settings = SubResource("LabelSettings_title")
+horizontal_alignment = 1
+
+[node name="EndStats" type="Label" parent="HUD/EndPanel/Panel/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Skor: 0    Kristal: 0"
+label_settings = SubResource("LabelSettings_stats")
+horizontal_alignment = 1
+
+[node name="Hint" type="Label" parent="HUD/EndPanel/Panel/VBox"]
+layout_mode = 2
+text = "Yeniden başlamak için R"
+label_settings = SubResource("LabelSettings_small")
+horizontal_alignment = 1
