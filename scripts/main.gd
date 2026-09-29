@@ -85,6 +85,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _process(delta: float) -> void:
+	# A long frame must not carry the runner through an obstacle between overlap checks.
+	delta = minf(delta, 1.0 / 30.0)
 	if state == State.RUNNING:
 		elapsed += delta
 		var target_speed := START_SPEED * pow(SPEED_STEP, floorf(elapsed / SPEED_INTERVAL))

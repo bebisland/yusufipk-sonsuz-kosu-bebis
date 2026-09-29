@@ -79,18 +79,20 @@ func tick(delta: float, run_speed: float, auto_lane: Variant = null, auto_jump :
 		anim.speed_scale = run_speed / 12.0
 
 
-func stop() -> void:
+## Ends the run; a runner caught mid-jump drops back onto the road.
+func stop() -> Tween:
 	alive = false
 	if anim:
 		anim.pause()
+	var tween := create_tween()
+	tween.tween_property(self, "position:y", 0.0, 0.25)
+	return tween
 
 
 func die() -> void:
-	stop()
-	var tween := create_tween()
+	var tween := stop()
 	# Positive X rotation tips the runner backwards, away from what it hit.
-	tween.tween_property(model_root, "rotation:x", 1.2, 0.35).set_ease(Tween.EASE_OUT)
-	tween.parallel().tween_property(self, "position:y", 0.0, 0.25)
+	tween.parallel().tween_property(model_root, "rotation:x", 1.2, 0.35).set_ease(Tween.EASE_OUT)
 
 
 func _on_area_entered(area: Area3D) -> void:
