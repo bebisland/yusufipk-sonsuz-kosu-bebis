@@ -1,28 +1,30 @@
 # Sonsuz Koşu
 
-A three-lane endless runner. Switch lanes, jump over barriers and carts, grab crystals, and survive a 90-second round that keeps speeding up.
+![Sonsuz Koşu](docs/gameplay.webp)
 
-Built in Godot 4.7 by Claude Code (Opus 5.5). Every model, texture and the music track were generated with [Higgsfield](https://higgsfield.ai). The in-game text is in Turkish.
+Üç şeritli sonsuz koşu oyunu. Şerit değiştir, bariyerlerin ve arabaların üstünden atla, kristalleri topla ve giderek hızlanan 90 saniyelik turu tamamla.
 
-## Play
+Bu oyunu bir YouTube videosu için yaptık. Kodu Godot 4.7'de Claude Code (Opus 5.5) yazdı; bütün modeller, dokular ve müzik [Higgsfield](https://higgsfield.ai/s/claude-opus-5-5-yt-yusufipk-kKcOju) ile üretildi. Videonun linki yayınlanınca buraya eklenecek.
 
-Download the build for your system from [Releases](https://github.com/yusufipk/sonsuz-kosu/releases/latest) and run it. Nothing to install.
+## Oyna
 
-- **Windows:** `SonsuzKosu.exe`. The file is not code-signed, so SmartScreen may warn you: click "More info", then "Run anyway".
+[Releases](https://github.com/yusufipk/sonsuz-kosu/releases/latest) sayfasından sistemine uygun dosyayı indir ve çalıştır, kurulum gerekmiyor.
+
+- **Windows:** `SonsuzKosu.exe`. Dosya imzalı olmadığı için SmartScreen uyarı verebilir: "Ek bilgi"ye, sonra "Yine de çalıştır"a tıkla.
 - **Linux:** `chmod +x SonsuzKosu.x86_64 && ./SonsuzKosu.x86_64`
 
-Needs a GPU with Vulkan support (or Direct3D 12 on Windows).
+Vulkan destekleyen bir ekran kartı gerekiyor (Windows'ta Direct3D 12 de yeterli).
 
-## Controls
+## Kontroller
 
-- **A / D** or **Left / Right:** switch lanes
-- **Space**, **W** or **Up:** jump
-- **R:** restart
+- **A / D** ya da **Sol / Sağ ok:** şerit değiştir
+- **Boşluk**, **W** ya da **Yukarı ok:** zıpla
+- **R:** yeniden başla
 
-## Run from source
+## Kaynak koddan çalıştır
 
-Open `project.godot` in [Godot 4.7](https://godotengine.org/download) and press F5.
+`project.godot` dosyasını [Godot 4.7](https://godotengine.org/download) ile aç ve F5'e bas.
 
-## License
+## Lisans
 
-The code is MIT licensed. The models, textures and music in `assets/` are not covered by that license.
+Kod MIT lisanslı. `assets/` klasöründeki modeller, dokular ve müzik bu lisansın kapsamında değil.
