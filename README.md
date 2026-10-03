@@ -4,7 +4,7 @@
 
 Üç şeritli sonsuz koşu oyunu. Şerit değiştir, bariyerlerin ve arabaların üstünden atla, kristalleri topla ve giderek hızlanan 90 saniyelik turu tamamla.
 
-Bu oyunu bir YouTube videosu için yaptık. Kodu Godot 4.7'de Claude Code (Opus 5.5) yazdı; bütün modeller, dokular ve müzik [Higgsfield](https://higgsfield.ai/s/claude-opus-5-5-yt-yusufipk-kKcOju) ile üretildi. Videonun linki yayınlanınca buraya eklenecek.
+Bu oyunu [bir YouTube videosu](https://www.youtube.com/watch?v=ooOnOUPlCF0) için yaptık. Kodu Godot 4.7'de Claude Code (Opus 5.5) yazdı; bütün modeller, dokular ve müzik [Higgsfield](https://higgsfield.ai/s/claude-opus-5-5-yt-yusufipk-kKcOju) ile üretildi.
 
 ## Oyna
 
