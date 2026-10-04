@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bkxxwwmnru11n"
-path.s3tc="res://.godot/imported/cart_texture_20250901.png-77f1eaa75a0d9ce47e65bf8b8541e673.s3tc.ctex"
+uid="uid://cil17c6oeerxp"
+path.s3tc="res://.godot/imported/barrier_texture_1.png-8cbe452c80d47cc1ac22da53c82368db.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "cf7c559b9f7723e4b71757a8a111672b"
+"md5": "4c7f593d2b080cf54a35bef3f88ab6b8"
 }
 
 [deps]
 
-source_file="res://assets/models/cart_texture_20250901.png"
-dest_files=["res://.godot/imported/cart_texture_20250901.png-77f1eaa75a0d9ce47e65bf8b8541e673.s3tc.ctex"]
+source_file="res://assets/models/barrier_texture_1.png"
+dest_files=["res://.godot/imported/barrier_texture_1.png-8cbe452c80d47cc1ac22da53c82368db.s3tc.ctex"]
 
 [params]
 

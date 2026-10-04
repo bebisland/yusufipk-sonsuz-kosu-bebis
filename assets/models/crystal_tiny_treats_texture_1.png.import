@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b8k2gb71rxnrv"
-path.s3tc="res://.godot/imported/explorer_texture_0.png-dd240665d8cb15f2bb33df736869c1e3.s3tc.ctex"
+uid="uid://0vkmsp6aikia"
+path.s3tc="res://.godot/imported/crystal_tiny_treats_texture_1.png-afcc3301d0eb10ff84424a6f01a47794.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "9ccff0fd794f7a57e84d04c79893322c"
+"md5": "77713f85c2561bd81d71750081e5c904"
 }
 
 [deps]
 
-source_file="res://assets/models/explorer_texture_0.png"
-dest_files=["res://.godot/imported/explorer_texture_0.png-dd240665d8cb15f2bb33df736869c1e3.s3tc.ctex"]
+source_file="res://assets/models/crystal_tiny_treats_texture_1.png"
+dest_files=["res://.godot/imported/crystal_tiny_treats_texture_1.png-afcc3301d0eb10ff84424a6f01a47794.s3tc.ctex"]
 
 [params]
 

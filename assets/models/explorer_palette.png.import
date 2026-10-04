@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://6j5kj5jc1oxb"
-path.s3tc="res://.godot/imported/pillar_texture_20250901.png-253a29b5e95279958af1734ec6d668c9.s3tc.ctex"
+uid="uid://cd1ckby2nw4ta"
+path.s3tc="res://.godot/imported/explorer_palette.png-50ff0bfd4e202e9f009e0bdb47821520.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "f9682153f55fbfbc96bb9559d2dd26aa"
+"md5": "09ce4991aea43c9cbc1cd97fd8e45286"
 }
 
 [deps]
 
-source_file="res://assets/models/pillar_texture_20250901.png"
-dest_files=["res://.godot/imported/pillar_texture_20250901.png-253a29b5e95279958af1734ec6d668c9.s3tc.ctex"]
+source_file="res://assets/models/explorer_palette.png"
+dest_files=["res://.godot/imported/explorer_palette.png-50ff0bfd4e202e9f009e0bdb47821520.s3tc.ctex"]
 
 [params]
 

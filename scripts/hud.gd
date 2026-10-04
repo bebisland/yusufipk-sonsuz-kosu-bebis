@@ -28,5 +28,5 @@ func set_time_left(seconds: float) -> void:
 
 func show_end(title: String, score: int, crystals: int) -> void:
 	end_title.text = title
-	end_stats.text = "Skor: %d    Kristal: %d" % [score, crystals]
+	end_stats.text = "Skor: %d    Kurabiye: %d" % [score, crystals]
 	end_panel.show()

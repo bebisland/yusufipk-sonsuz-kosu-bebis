@@ -1,40 +1,57 @@
-[gd_scene load_steps=20 format=3]
+[gd_scene format=3 uid="uid://cybbog2ngwy61"]
 
-[ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
-[ext_resource type="Script" path="res://scripts/player.gd" id="2_player"]
-[ext_resource type="Script" path="res://scripts/hud.gd" id="3_hud"]
-[ext_resource type="Shader" path="res://shaders/sunset_sky.gdshader" id="4_sky"]
-[ext_resource type="Texture2D" path="res://assets/textures/sunset_sky.png" id="5_skytex"]
-[ext_resource type="Texture2D" path="res://assets/textures/stone_road.png" id="6_road"]
-[ext_resource type="Texture2D" path="res://assets/textures/crystal_icon.png" id="7_icon"]
+[ext_resource type="Script" uid="uid://md7x4w1pc1s0" path="res://scripts/main.gd" id="1_main"]
+[ext_resource type="Script" uid="uid://dj8cmfevse0q2" path="res://scripts/player.gd" id="2_player"]
+[ext_resource type="Script" uid="uid://d1ypu5i3fihca" path="res://scripts/hud.gd" id="3_hud"]
+[ext_resource type="Shader" uid="uid://d3t0xqcxaqbe6" path="res://main.gdshader" id="5_5vw27"]
+[ext_resource type="Texture2D" uid="uid://owkv7wpursr2" path="res://assets/textures/stone_road.png" id="6_road"]
+[ext_resource type="Texture2D" uid="uid://da00hyota1ddl" path="res://assets/textures/crystal_icon.png" id="7_icon"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_sky"]
-shader = ExtResource("4_sky")
-shader_parameter/sky_tex = ExtResource("5_skytex")
-shader_parameter/horizon_v = 0.85
-shader_parameter/brightness = 1.0
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_272bh"]
+shader = ExtResource("5_5vw27")
+shader_parameter/sky_color = Color(0.2, 0.5, 0.9, 1)
+shader_parameter/horizon_color = Color(0.5, 0.8, 1, 1)
+shader_parameter/horizon_blur = 0.1
+shader_parameter/sun_color = Color(1, 1, 1, 1)
+shader_parameter/sun_size = 0.001
+shader_parameter/sun_blur = 0.01
+shader_parameter/cloud_color = Color(1, 1, 1, 1)
+shader_parameter/cloud_edge_sharpness = 0.1
+shader_parameter/cloud_scale = 2.0
+shader_parameter/cloud_speed = 0.02
 
 [sub_resource type="Sky" id="Sky_main"]
-sky_material = SubResource("ShaderMaterial_sky")
+sky_material = SubResource("ShaderMaterial_272bh")
 
 [sub_resource type="Environment" id="Environment_main"]
 background_mode = 2
 sky = SubResource("Sky_main")
 ambient_light_source = 3
-ambient_light_energy = 1.0
+ambient_light_sky_contribution = 0.75
 tonemap_mode = 3
+tonemap_agx_white = 16.5
+tonemap_agx_contrast = 2.47
 glow_enabled = true
 glow_intensity = 0.7
 glow_bloom = 0.08
 fog_enabled = true
-fog_light_color = Color(0.95, 0.6, 0.4, 1)
-fog_density = 0.007
+fog_mode = 1
+fog_light_color = Color(0.39215687, 0.6509804, 0.8745098, 1)
+fog_light_energy = 1.25
+fog_density = 1.0
 fog_sky_affect = 0.0
+fog_height = 1024.0
+fog_height_density = -16.0
+fog_depth_begin = 0.0
+fog_depth_end = 75.0
+volumetric_fog_density = 0.0409
+volumetric_fog_length = 1024.0
+volumetric_fog_sky_affect = 0.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_road"]
 albedo_texture = ExtResource("6_road")
-roughness = 0.95
-uv1_scale = Vector3(0.25, 0.25, 0.25)
+metallic_specular = 0.0
+uv1_scale = Vector3(0.1, 0.1, 0.1)
 uv1_triplanar = true
 uv1_world_triplanar = true
 
@@ -43,10 +60,9 @@ material = SubResource("StandardMaterial3D_road")
 size = Vector2(8.6, 320)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ground"]
-albedo_color = Color(0.6, 0.4, 0.3, 1)
 albedo_texture = ExtResource("6_road")
-roughness = 1.0
-uv1_scale = Vector3(0.07, 0.07, 0.07)
+metallic_specular = 0.0
+uv1_scale = Vector3(0.1, 0.1, 0.1)
 uv1_triplanar = true
 uv1_world_triplanar = true
 
@@ -59,7 +75,6 @@ size = Vector3(0.7, 1.6, 0.6)
 
 [sub_resource type="LabelSettings" id="LabelSettings_big"]
 font_size = 72
-font_color = Color(1, 1, 1, 1)
 outline_size = 16
 outline_color = Color(0.08, 0.04, 0.1, 1)
 shadow_size = 6
@@ -72,6 +87,17 @@ font_color = Color(1, 0.88, 0.6, 1)
 outline_size = 10
 outline_color = Color(0.08, 0.04, 0.1, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+content_margin_left = 64.0
+content_margin_top = 40.0
+content_margin_right = 64.0
+content_margin_bottom = 40.0
+bg_color = Color(0.1, 0.05, 0.12, 0.72)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
+
 [sub_resource type="LabelSettings" id="LabelSettings_title"]
 font_size = 96
 font_color = Color(1, 0.8, 0.45, 1)
@@ -83,83 +109,69 @@ font_size = 48
 outline_size = 12
 outline_color = Color(0.08, 0.04, 0.1, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
-bg_color = Color(0.1, 0.05, 0.12, 0.72)
-corner_radius_top_left = 24
-corner_radius_top_right = 24
-corner_radius_bottom_right = 24
-corner_radius_bottom_left = 24
-content_margin_left = 64.0
-content_margin_top = 40.0
-content_margin_right = 64.0
-content_margin_bottom = 40.0
-
-[node name="Main" type="Node3D"]
+[node name="Main" type="Node3D" unique_id=1706294358]
 script = ExtResource("1_main")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=661578399]
 environment = SubResource("Environment_main")
 
-[node name="Sun" type="DirectionalLight3D" parent="."]
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=213280858]
+transform = Transform3D(1, 0, 0, 0, 0.70710677, 0.7071068, 0, -0.7071068, 0.70710677, 0, 4, 0)
+light_energy = 0.75
 shadow_enabled = true
 directional_shadow_max_distance = 60.0
 
-[node name="FillLight" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.906308, 0.422618, 0, -0.422618, 0.906308, 0, 0, 0)
-light_color = Color(0.85, 0.7, 0.95, 1)
-light_energy = 0.55
-
-[node name="Road" type="MeshInstance3D" parent="."]
+[node name="Road" type="MeshInstance3D" parent="." unique_id=926458778]
 mesh = SubResource("PlaneMesh_road")
 
-[node name="Ground" type="MeshInstance3D" parent="."]
+[node name="Ground" type="MeshInstance3D" parent="." unique_id=1014605225]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.03, 0)
 mesh = SubResource("PlaneMesh_ground")
 
-[node name="Player" type="Node3D" parent="."]
+[node name="Player" type="Node3D" parent="." unique_id=928530982]
 script = ExtResource("2_player")
 
-[node name="Model" type="Node3D" parent="Player"]
+[node name="Model" type="Node3D" parent="Player" unique_id=1883946203]
 
-[node name="Hitbox" type="Area3D" parent="Player"]
+[node name="Hitbox" type="Area3D" parent="Player" unique_id=1208194565]
 collision_mask = 6
 monitorable = false
 
-[node name="Shape" type="CollisionShape3D" parent="Player/Hitbox"]
+[node name="Shape" type="CollisionShape3D" parent="Player/Hitbox" unique_id=1223223342]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
 shape = SubResource("BoxShape3D_player")
 
-[node name="Camera" type="Camera3D" parent="."]
+[node name="Camera" type="Camera3D" parent="." unique_id=738464680]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.4, 6.5)
 fov = 65.0
 
-[node name="Spawned" type="Node3D" parent="."]
+[node name="Spawned" type="Node3D" parent="." unique_id=1201430991]
 
-[node name="HUD" type="CanvasLayer" parent="."]
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1576907442]
 script = ExtResource("3_hud")
 
-[node name="CrystalBox" type="HBoxContainer" parent="HUD"]
+[node name="CrystalBox" type="HBoxContainer" parent="HUD" unique_id=2136775763]
 offset_left = 32.0
 offset_top = 24.0
 offset_right = 432.0
 offset_bottom = 124.0
 theme_override_constants/separation = 16
 
-[node name="Icon" type="TextureRect" parent="HUD/CrystalBox"]
+[node name="Icon" type="TextureRect" parent="HUD/CrystalBox" unique_id=2080896352]
 custom_minimum_size = Vector2(56, 96)
 layout_mode = 2
 texture = ExtResource("7_icon")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="CrystalLabel" type="Label" parent="HUD/CrystalBox"]
+[node name="CrystalLabel" type="Label" parent="HUD/CrystalBox" unique_id=1079540528]
 unique_name_in_owner = true
 layout_mode = 2
 text = "0"
 label_settings = SubResource("LabelSettings_big")
 vertical_alignment = 1
 
-[node name="ScoreBox" type="VBoxContainer" parent="HUD"]
+[node name="ScoreBox" type="VBoxContainer" parent="HUD" unique_id=403348870]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -170,20 +182,20 @@ offset_bottom = 140.0
 grow_horizontal = 0
 theme_override_constants/separation = -8
 
-[node name="Caption" type="Label" parent="HUD/ScoreBox"]
+[node name="Caption" type="Label" parent="HUD/ScoreBox" unique_id=1107119222]
 layout_mode = 2
 text = "SKOR"
 label_settings = SubResource("LabelSettings_small")
 horizontal_alignment = 2
 
-[node name="ScoreLabel" type="Label" parent="HUD/ScoreBox"]
+[node name="ScoreLabel" type="Label" parent="HUD/ScoreBox" unique_id=1672984976]
 unique_name_in_owner = true
 layout_mode = 2
 text = "0"
 label_settings = SubResource("LabelSettings_big")
 horizontal_alignment = 2
 
-[node name="TimeLabel" type="Label" parent="HUD"]
+[node name="TimeLabel" type="Label" parent="HUD" unique_id=1010319948]
 unique_name_in_owner = true
 anchors_preset = 5
 anchor_left = 0.5
@@ -197,7 +209,7 @@ text = "1:30"
 label_settings = SubResource("LabelSettings_small")
 horizontal_alignment = 1
 
-[node name="EndPanel" type="CenterContainer" parent="HUD"]
+[node name="EndPanel" type="CenterContainer" parent="HUD" unique_id=89923270]
 unique_name_in_owner = true
 anchors_preset = 15
 anchor_right = 1.0
@@ -205,29 +217,29 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Panel" type="PanelContainer" parent="HUD/EndPanel"]
+[node name="Panel" type="PanelContainer" parent="HUD/EndPanel" unique_id=1590067756]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
-[node name="VBox" type="VBoxContainer" parent="HUD/EndPanel/Panel"]
+[node name="VBox" type="VBoxContainer" parent="HUD/EndPanel/Panel" unique_id=1660090956]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="EndTitle" type="Label" parent="HUD/EndPanel/Panel/VBox"]
+[node name="EndTitle" type="Label" parent="HUD/EndPanel/Panel/VBox" unique_id=493154107]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Gün battı!"
 label_settings = SubResource("LabelSettings_title")
 horizontal_alignment = 1
 
-[node name="EndStats" type="Label" parent="HUD/EndPanel/Panel/VBox"]
+[node name="EndStats" type="Label" parent="HUD/EndPanel/Panel/VBox" unique_id=612073484]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Skor: 0    Kristal: 0"
 label_settings = SubResource("LabelSettings_stats")
 horizontal_alignment = 1
 
-[node name="Hint" type="Label" parent="HUD/EndPanel/Panel/VBox"]
+[node name="Hint" type="Label" parent="HUD/EndPanel/Panel/VBox" unique_id=997536289]
 layout_mode = 2
 text = "Yeniden başlamak için R"
 label_settings = SubResource("LabelSettings_small")

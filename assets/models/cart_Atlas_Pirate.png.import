@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://wuuaxulh52st"
-path.s3tc="res://.godot/imported/crystal_texture_20250901.png-2eaa17f946126afc4396345d59990062.s3tc.ctex"
+uid="uid://da132i2c5tc6d"
+path.s3tc="res://.godot/imported/cart_Atlas_Pirate.png-d8390ad0693ce38830d7b9c5adcd5431.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "f450cb7022da1ec7b0bd0a766466202b"
+"md5": "219f43be043845c1039f47f20d5b6de4"
 }
 
 [deps]
 
-source_file="res://assets/models/crystal_texture_20250901.png"
-dest_files=["res://.godot/imported/crystal_texture_20250901.png-2eaa17f946126afc4396345d59990062.s3tc.ctex"]
+source_file="res://assets/models/cart_Atlas_Pirate.png"
+dest_files=["res://.godot/imported/cart_Atlas_Pirate.png-d8390ad0693ce38830d7b9c5adcd5431.s3tc.ctex"]
 
 [params]
 

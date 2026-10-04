@@ -18,10 +18,10 @@ const LAYER_CRYSTAL := 4
 # target size in meters. `hit_shrink` makes the collision box a bit smaller than the
 # mesh so near misses feel fair.
 const MODELS := {
-	"barrier": {"path": "res://assets/models/barrier.glb", "axis": "x", "size": 2.3, "long_x": true, "hit_shrink": Vector3(0.9, 0.75, 0.7)},
-	"pillar": {"path": "res://assets/models/pillar.glb", "axis": "y", "size": 3.8, "long_x": false, "hit_shrink": Vector3(0.75, 1.0, 0.75)},
+	"barrier": {"path": "res://assets/models/barrier.glb", "axis": "x", "size": 1.5, "long_x": true, "hit_shrink": Vector3(0.5, 0.5, 0.5)},
+	"pillar": {"path": "res://assets/models/pillar.glb", "axis": "y", "size": 10, "long_x": false, "hit_shrink": Vector3(0.25, 1.0, 0.25)},
 	"cart": {"path": "res://assets/models/cart.glb", "axis": "x", "size": 4.8, "long_x": true, "hit_shrink": Vector3(0.9, 0.9, 0.8)},
-	"crystal": {"path": "res://assets/models/crystal.glb", "axis": "y", "size": 0.9, "long_x": false, "hit_shrink": Vector3(1.4, 1.2, 1.4)},
+	"crystal": {"path": "res://assets/models/crystal.glb", "axis": "y", "size": 0.3, "long_x": false, "hit_shrink": Vector3(1.4, 1.2, 1.4)},
 }
 
 enum State { RUNNING, OVER }
@@ -67,7 +67,6 @@ func _ready() -> void:
 	player.hit_obstacle.connect(_on_player_hit)
 	player.picked_crystal.connect(_on_crystal_picked)
 	player.jumped.connect(Sound.play.bind("jump"))
-	_update_sunset(0.0)
 	_update_camera(1.0)
 	hud.set_crystals(0)
 	hud.set_score(0)
@@ -101,7 +100,6 @@ func _process(delta: float) -> void:
 			player.tick(delta, speed)
 		_spawn_ahead()
 		_despawn_behind()
-		_update_sunset(elapsed / ROUND_TIME)
 		hud.set_score(_score())
 		hud.set_time_left(ROUND_TIME - elapsed)
 		if elapsed >= ROUND_TIME:
@@ -151,7 +149,8 @@ func _update_camera(delta: float) -> void:
 	camera.position.z = target.z
 	if shake > 0.0:
 		camera.position += Vector3(randf_range(-1, 1), randf_range(-1, 1), 0) * shake * 0.15
-	camera.look_at(Vector3(p.x * 0.5, 1.3, p.z - 7.0))
+	camera.look_at(Vector3(p.x * 0.5, -2, p.z - 7.0))
+	camera.position.y = 4
 
 
 ## t runs from 0 (round start) to 1 (sun down).
@@ -283,9 +282,6 @@ func _build_template(key: String) -> Area3D:
 	visual.scale = Vector3.ONE * s
 	var center := box.get_center()
 	model.position -= Vector3(center.x, box.position.y, center.z)
-	if is_crystal:
-		for mesh in model.find_children("*", "MeshInstance3D", true, false):
-			(mesh as MeshInstance3D).material_overlay = crystal_glow
 
 	var shape := CollisionShape3D.new()
 	var box_shape := BoxShape3D.new()
