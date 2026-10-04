@@ -2,6 +2,8 @@
 
 ![Sonsuz Koşu](docs/gameplay-bebis.webp)
 
+Üç şeritli sonsuz koşu oyunu. Şerit değiştir, kristallerin ve taşların üstünden atla, kurabiyeleri topla ve giderek hızlanan 90 saniyelik turu tamamla.
+
 ## Oyna
 
 [Releases](https://github.com/bebisland/yusufipk-sonsuz-kosu-bebis/releases) sayfasından sistemine uygun dosyayı indir ve çalıştır, kurulum gerekmiyor.
